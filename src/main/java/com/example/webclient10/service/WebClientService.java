@@ -16,6 +16,18 @@ public class WebClientService {
                 .build();
     }
 
+    //Kalder smitte backend med ekstra parameter, nemlig trådnavn. Bruges til at nogle tråde bliver sat til at vente
+    public Region fetchRegionSleep(String threadName) {
+        Region region = regionClient.get()
+                .uri("http://localhost:5000/regionsleep/1081/" + threadName)
+                .retrieve()
+                .bodyToMono(Region.class)
+                .block();
+
+        return region;
+    }
+
+
     //Den her virker. Henter helt almindelig 1 region. Virker også selvom Region har counties. Bare nogle af de variable der er i Region Json er her i Region.
     public Region fetchRegion() {
         Region region = regionClient.get()
